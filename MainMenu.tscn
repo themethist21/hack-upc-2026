@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://bdlwup1fkkmlp"]
+
+[ext_resource type="Script" uid="uid://lcb2u7kfirc3" path="res://main_menu.gd" id="1_eiy7p"]
+[ext_resource type="FontFile" uid="uid://dxnhxrgq0iwxa" path="res://Assets/Fibberish v1.0/fibberish.ttf" id="2_h7a2f"]
+
+[node name="Main" type="Control" unique_id=177880764]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_eiy7p")
+
+[node name="PlayButton" type="Button" parent="." unique_id=602277825]
+layout_mode = 0
+offset_left = 668.0
+offset_top = 308.0
+offset_right = 1016.0
+offset_bottom = 372.0
+theme_override_fonts/font = ExtResource("2_h7a2f")
+theme_override_font_sizes/font_size = 64
+text = "Play"
+
+[node name="QuitButton" type="Button" parent="." unique_id=6537568]
+layout_mode = 0
+offset_left = 668.0
+offset_top = 393.0
+offset_right = 1016.0
+offset_bottom = 457.0
+theme_override_fonts/font = ExtResource("2_h7a2f")
+theme_override_font_sizes/font_size = 64
+text = "Exit"
+
+[node name="CreditsButton" type="Button" parent="." unique_id=2025306435]
+layout_mode = 0
+offset_left = 667.0
+offset_top = 477.0
+offset_right = 1015.0
+offset_bottom = 541.0
+theme_override_fonts/font = ExtResource("2_h7a2f")
+theme_override_font_sizes/font_size = 64
+text = "Credits
+"
+
+[node name="Label" type="Label" parent="." unique_id=1661872856]
+layout_mode = 0
+offset_left = 421.0
+offset_top = 126.0
+offset_right = 1014.0
+offset_bottom = 231.0
+theme_override_fonts/font = ExtResource("2_h7a2f")
+theme_override_font_sizes/font_size = 120
+text = "Bug Catcher"
+
+[node name="Label2" type="Label" parent="." unique_id=379713703]
+layout_mode = 0
+offset_left = 923.0
+offset_top = 222.0
+offset_right = 1103.0
+offset_bottom = 250.0
+theme_override_fonts/font = ExtResource("2_h7a2f")
+theme_override_font_sizes/font_size = 32
+text = "v0.0.1"
+
+[connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="CreditsButton" to="." method="_on_credits_button_pressed"]

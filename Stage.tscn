@@ -1,0 +1,224 @@
+[gd_scene format=3 uid="uid://ptae4f7nb8hi"]
+
+[ext_resource type="PackedScene" uid="uid://cwt5unneiusvr" path="res://BigScene/Path.tscn" id="1_4ubfd"]
+[ext_resource type="Script" uid="uid://ccycl5mlsqnwc" path="res://stage.gd" id="1_gsjio"]
+[ext_resource type="PackedScene" uid="uid://2eqy6b7h8ddw" path="res://BigScene/Catcher.tscn" id="2_mwpjy"]
+[ext_resource type="Texture2D" uid="uid://b01wbw1vbxjlq" path="res://Assets/Sun.png" id="2_r7lnk"]
+[ext_resource type="Script" uid="uid://50psenuep0be" path="res://hud.gd" id="4_d3qrh"]
+[ext_resource type="FontFile" uid="uid://dxnhxrgq0iwxa" path="res://Assets/Fibberish v1.0/fibberish.ttf" id="4_gsj67"]
+
+[node name="Stage" type="Node2D" unique_id=115685834]
+script = ExtResource("1_gsjio")
+
+[node name="Sun" type="Sprite2D" parent="." unique_id=1432510519]
+position = Vector2(976, 40)
+scale = Vector2(7, 7)
+texture = ExtResource("2_r7lnk")
+
+[node name="Character" type="Node2D" parent="." unique_id=1857713976]
+
+[node name="Catcher" parent="Character" unique_id=1712971132 instance=ExtResource("2_mwpjy")]
+position = Vector2(640, 320)
+scale = Vector2(8, 8)
+
+[node name="LeftLimit" type="Marker2D" parent="Character" unique_id=1544754583]
+position = Vector2(465, 325)
+
+[node name="RightLimit" type="Marker2D" parent="Character" unique_id=1731210315]
+position = Vector2(815, 325)
+
+[node name="RightEdge" type="Marker2D" parent="Character" unique_id=1794619826]
+position = Vector2(1205, 325)
+
+[node name="LeftEdge" type="Marker2D" parent="Character" unique_id=121982499]
+position = Vector2(75, 325)
+
+[node name="Path" parent="." unique_id=814717225 instance=ExtResource("1_4ubfd")]
+position = Vector2(189, 465)
+scale = Vector2(8, 8)
+
+[node name="CatchTimer" type="Timer" parent="." unique_id=1067201265]
+wait_time = 0.5
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=2010774310]
+script = ExtResource("4_d3qrh")
+
+[node name="ScoreTagLabel" type="Label" parent="HUD" unique_id=443330507]
+offset_left = 19.0
+offset_top = 16.0
+offset_right = 207.0
+offset_bottom = 76.0
+theme_override_fonts/font = ExtResource("4_gsj67")
+theme_override_font_sizes/font_size = 64
+text = "Score: "
+
+[node name="ScoreLabel" type="Label" parent="HUD" unique_id=87059379]
+offset_left = 201.0
+offset_top = 16.0
+offset_right = 241.0
+offset_bottom = 76.0
+theme_override_fonts/font = ExtResource("4_gsj67")
+theme_override_font_sizes/font_size = 64
+text = "0"
+vertical_alignment = 1
+
+[node name="TimeLabel" type="Label" parent="HUD" unique_id=1344423094]
+offset_left = 1170.0
+offset_top = 18.0
+offset_right = 1242.0
+offset_bottom = 74.0
+theme_override_fonts/font = ExtResource("4_gsj67")
+theme_override_font_sizes/font_size = 64
+text = "100"
+
+[node name="StartScreen" type="Control" parent="HUD" unique_id=209084992]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="HUD/StartScreen" unique_id=198284127]
+layout_mode = 0
+offset_right = 1282.0
+offset_bottom = 720.0
+color = Color(1, 1, 1, 0.58431375)
+
+[node name="Label" type="Label" parent="HUD/StartScreen" unique_id=589354176]
+layout_mode = 0
+offset_left = 245.0
+offset_top = 322.0
+offset_right = 1101.0
+offset_bottom = 434.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_gsj67")
+theme_override_font_sizes/font_size = 94
+text = "Press 'Space' to start"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameOverScreen" type="Control" parent="HUD" unique_id=1364519967]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="HUD/GameOverScreen" unique_id=1273956310]
+layout_mode = 0
+offset_right = 1286.0
+offset_bottom = 723.0
+color = Color(1, 1, 1, 0.58431375)
+
+[node name="Label" type="Label" parent="HUD/GameOverScreen" unique_id=1387424694]
+layout_mode = 0
+offset_left = 212.0
+offset_top = 168.0
+offset_right = 1068.0
+offset_bottom = 280.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_gsj67")
+theme_override_font_sizes/font_size = 94
+text = "Time's up!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="QuitButton" type="Button" parent="HUD/GameOverScreen" unique_id=79865489]
+layout_mode = 0
+offset_left = 504.0
+offset_top = 500.0
+offset_right = 773.0
+offset_bottom = 561.0
+theme_override_fonts/font = ExtResource("4_gsj67")
+theme_override_font_sizes/font_size = 60
+text = "Quit"
+
+[node name="RetryButton" type="Button" parent="HUD/GameOverScreen" unique_id=240149248]
+layout_mode = 0
+offset_left = 505.0
+offset_top = 400.0
+offset_right = 774.0
+offset_bottom = 461.0
+theme_override_fonts/font = ExtResource("4_gsj67")
+theme_override_font_sizes/font_size = 60
+text = "Retry"
+
+[node name="Label2" type="Label" parent="HUD/GameOverScreen" unique_id=1597168559]
+layout_mode = 0
+offset_left = 473.0
+offset_top = 274.0
+offset_right = 707.0
+offset_bottom = 386.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_gsj67")
+theme_override_font_sizes/font_size = 64
+text = "Score: "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GOScoreLabel" type="Label" parent="HUD/GameOverScreen" unique_id=434846743]
+layout_mode = 0
+offset_left = 649.0
+offset_top = 275.0
+offset_right = 783.0
+offset_bottom = 387.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_gsj67")
+theme_override_font_sizes/font_size = 64
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PauseScreen" type="Control" parent="HUD" unique_id=2071637425]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="HUD/PauseScreen" unique_id=1549648910]
+layout_mode = 0
+offset_right = 1282.0
+offset_bottom = 722.0
+color = Color(1, 1, 1, 0.58431375)
+
+[node name="Label" type="Label" parent="HUD/PauseScreen" unique_id=635034046]
+layout_mode = 0
+offset_left = 217.0
+offset_top = 301.0
+offset_right = 1122.0
+offset_bottom = 413.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_gsj67")
+theme_override_font_sizes/font_size = 94
+text = "Press 'Space' to resume"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ExitLabel" type="Label" parent="HUD/PauseScreen" unique_id=1215393506]
+layout_mode = 0
+offset_left = 234.0
+offset_top = 378.0
+offset_right = 1090.0
+offset_bottom = 490.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_gsj67")
+theme_override_font_sizes/font_size = 50
+text = "Press 'Esc' to quit to main menu"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TimeLeftTimer" type="Timer" parent="." unique_id=1838476273]
+
+[connection signal="game_over" from="." to="Character/Catcher" method="_game_end"]
+[connection signal="game_over" from="." to="Path" method="_game_end"]
+[connection signal="pause_game" from="." to="Character/Catcher" method="_game_pause"]
+[connection signal="pause_game" from="." to="Path" method="_game_pause"]
+[connection signal="timeout" from="CatchTimer" to="." method="_on_catch_timer_timeout"]
+[connection signal="resume_game" from="HUD" to="." method="_resume_game"]
+[connection signal="resume_game" from="HUD" to="Character/Catcher" method="_game_pause"]
+[connection signal="start_game" from="HUD" to="." method="_game_start"]
+[connection signal="start_game" from="HUD" to="Character/Catcher" method="_game_start"]
+[connection signal="start_game" from="HUD" to="Path" method="_game_start"]
+[connection signal="pressed" from="HUD/GameOverScreen/QuitButton" to="HUD" method="_on_quit_button_pressed"]
+[connection signal="pressed" from="HUD/GameOverScreen/RetryButton" to="HUD" method="_on_retry_button_pressed"]
+[connection signal="timeout" from="TimeLeftTimer" to="." method="_on_time_left_timer_timeout"]

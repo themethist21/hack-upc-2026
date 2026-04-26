@@ -1,0 +1,94 @@
+[gd_scene format=3 uid="uid://2eqy6b7h8ddw"]
+
+[ext_resource type="Script" uid="uid://ck8mn0m3cqgoq" path="res://BigScene/catcher.gd" id="1_w7ojh"]
+[ext_resource type="Texture2D" uid="uid://brg72dexokjf3" path="res://Assets/Crosshair.png" id="2_6vtpk"]
+[ext_resource type="Texture2D" uid="uid://0alokd7tpvvp" path="res://Assets/Catcher-sheet.png" id="4_q3nac"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q3nac"]
+atlas = ExtResource("4_q3nac")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8bywl"]
+atlas = ExtResource("4_q3nac")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k6vcn"]
+atlas = ExtResource("4_q3nac")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ecm1t"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q3nac")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8bywl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k6vcn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w7ojh"]
+atlas = ExtResource("4_q3nac")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_w7ojh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w7ojh")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_q3nac"]
+radius = 8.12655
+
+[node name="Catcher" type="Node2D" unique_id=1712971132]
+script = ExtResource("1_w7ojh")
+
+[node name="UpLimit" type="Marker2D" parent="." unique_id=2040635990]
+position = Vector2(0, 18)
+
+[node name="DownLimit" type="Marker2D" parent="." unique_id=1729760167]
+position = Vector2(0, 39)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2010618547]
+sprite_frames = SubResource("SpriteFrames_ecm1t")
+
+[node name="CatchOutTimer" type="Timer" parent="." unique_id=822761718]
+wait_time = 0.5
+
+[node name="Hitmarker" type="Node2D" parent="." unique_id=1214153016]
+z_index = 2
+position = Vector2(0, 30)
+
+[node name="CatchSprite" type="AnimatedSprite2D" parent="Hitmarker" unique_id=451932871]
+z_index = 2
+sprite_frames = SubResource("SpriteFrames_w7ojh")
+
+[node name="Pointer" type="Sprite2D" parent="Hitmarker" unique_id=916110784]
+z_index = 2
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_6vtpk")
+
+[node name="Hitbox" type="Area2D" parent="Hitmarker" unique_id=1301800303]
+disable_mode = 1
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitmarker/Hitbox" unique_id=1502205629]
+position = Vector2(0, 1)
+scale = Vector2(1, 0.7)
+shape = SubResource("CircleShape2D_q3nac")
+
+[connection signal="timeout" from="CatchOutTimer" to="." method="_on_catch_out_timer_timeout"]
+[connection signal="body_entered" from="Hitmarker/Hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="body_exited" from="Hitmarker/Hitbox" to="." method="_on_hitbox_body_exited"]
