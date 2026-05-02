@@ -1,0 +1,116 @@
+[gd_scene format=3 uid="uid://bk7wbw7u6s8lc"]
+
+[ext_resource type="Script" uid="uid://rmb8a28hu7cp" path="res://SmallScene/mantis.gd" id="1_euewg"]
+[ext_resource type="Texture2D" uid="uid://bla6enay4ig4j" path="res://Assets/Mantis.png" id="2_euewg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3sdpk"]
+atlas = ExtResource("2_euewg")
+region = Rect2(0, 32, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_11ml1"]
+atlas = ExtResource("2_euewg")
+region = Rect2(48, 32, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b21rv"]
+atlas = ExtResource("2_euewg")
+region = Rect2(0, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6eojw"]
+atlas = ExtResource("2_euewg")
+region = Rect2(48, 0, 48, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8rx8v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3sdpk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_11ml1")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b21rv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6eojw")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 2.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_euewg"]
+size = Vector2(31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_euewg"]
+atlas = ExtResource("2_euewg")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8rx8v"]
+atlas = ExtResource("2_euewg")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7t00v"]
+atlas = ExtResource("2_euewg")
+region = Rect2(64, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ty14"]
+atlas = ExtResource("2_euewg")
+region = Rect2(96, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nky3d"]
+atlas = ExtResource("2_euewg")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nky3d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_euewg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8rx8v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7t00v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ty14")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nky3d")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[node name="Mantis" type="Node2D" unique_id=924527224]
+script = ExtResource("1_euewg")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=522699403]
+position = Vector2(-3, 0)
+sprite_frames = SubResource("SpriteFrames_8rx8v")
+animation = &"walk"
+
+[node name="HitArea" type="Area2D" parent="." unique_id=310326307]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea" unique_id=507528606]
+position = Vector2(7, 0)
+shape = SubResource("RectangleShape2D_euewg")
+
+[node name="HitSprite" type="AnimatedSprite2D" parent="." unique_id=1982432255]
+position = Vector2(7, 0)
+sprite_frames = SubResource("SpriteFrames_nky3d")
+
+[node name="HitTimer" type="Timer" parent="." unique_id=361704875]
+wait_time = 0.3
+
+[connection signal="body_entered" from="HitArea" to="." method="_on_hitbox_body_entered"]
+[connection signal="body_exited" from="HitArea" to="." method="_on_hitbox_body_exited"]
+[connection signal="timeout" from="HitTimer" to="." method="_on_hit_timer_timeout"]

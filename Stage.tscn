@@ -1,46 +1,172 @@
-[gd_scene format=3 uid="uid://ptae4f7nb8hi"]
+[gd_scene format=4 uid="uid://ptae4f7nb8hi"]
 
 [ext_resource type="PackedScene" uid="uid://cwt5unneiusvr" path="res://BigScene/Path.tscn" id="1_4ubfd"]
-[ext_resource type="Script" uid="uid://ccycl5mlsqnwc" path="res://stage.gd" id="1_gsjio"]
+[ext_resource type="Script" uid="uid://b4tp001wuww7q" path="res://game_controller.gd" id="1_5n5ix"]
+[ext_resource type="Texture2D" uid="uid://bft2uv0hveds7" path="res://Assets/Tiles.png" id="2_2p67s"]
 [ext_resource type="PackedScene" uid="uid://2eqy6b7h8ddw" path="res://BigScene/Catcher.tscn" id="2_mwpjy"]
 [ext_resource type="Texture2D" uid="uid://b01wbw1vbxjlq" path="res://Assets/Sun.png" id="2_r7lnk"]
+[ext_resource type="Script" uid="uid://bp1tikkmhffgc" path="res://BigScene/small_path.gd" id="3_5n5ix"]
 [ext_resource type="Script" uid="uid://50psenuep0be" path="res://hud.gd" id="4_d3qrh"]
 [ext_resource type="FontFile" uid="uid://dxnhxrgq0iwxa" path="res://Assets/Fibberish v1.0/fibberish.ttf" id="4_gsj67"]
+[ext_resource type="PackedScene" uid="uid://cqihgx26drh3e" path="res://SmallScene/big_path.tscn" id="8_lneo4"]
+[ext_resource type="PackedScene" uid="uid://bk7wbw7u6s8lc" path="res://SmallScene/mantis.tscn" id="8_mk6be"]
+[ext_resource type="Script" uid="uid://bfj2yd0avo3ui" path="res://SmallScene/big_path.gd" id="8_uymwg"]
+[ext_resource type="Texture2D" uid="uid://ctuib6ogqhr1j" path="res://Assets/ProgressBar.png" id="12_sbwno"]
 
-[node name="Stage" type="Node2D" unique_id=115685834]
-script = ExtResource("1_gsjio")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lneo4"]
+texture = ExtResource("2_2p67s")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
 
-[node name="Sun" type="Sprite2D" parent="." unique_id=1432510519]
+[sub_resource type="TileSet" id="TileSet_5n5ix"]
+sources/0 = SubResource("TileSetAtlasSource_lneo4")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ktjup"]
+bg_color = Color(0.73333335, 0.45882353, 0.2784314, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1wg0b"]
+atlas = ExtResource("12_sbwno")
+region = Rect2(0, 0, 16, 98)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g435t"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1wg0b")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5n3lo"]
+atlas = ExtResource("12_sbwno")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s4tgq"]
+atlas = ExtResource("12_sbwno")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ln0f3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5n3lo")
+}],
+"loop": true,
+"name": &"bug",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s4tgq")
+}],
+"loop": true,
+"name": &"net",
+"speed": 5.0
+}]
+
+[node name="Enviroment" type="Control" unique_id=1530250379]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Stage" type="Node2D" parent="." unique_id=115685834]
+script = ExtResource("1_5n5ix")
+
+[node name="SmallPath" type="Node2D" parent="Stage" unique_id=1371697513]
+script = ExtResource("3_5n5ix")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="Stage/SmallPath" unique_id=546106552]
+position = Vector2(0, -32)
+scale = Vector2(7, 7)
+tile_map_data = PackedByteArray("AAAAAAMAAAAAAAIAAAACAAMAAAAAAAIAAAAEAAMAAAAAAAIAAAAGAAMAAAAAAAIAAAAIAAMAAAAAAAIAAAAKAAMAAAAAAAIAAAABAAMAAAABAAIAAAADAAMAAAABAAIAAAAHAAMAAAABAAIAAAAJAAMAAAABAAIAAAALAAMAAAABAAIAAAAFAAMAAAABAAIAAAA=")
+tile_set = SubResource("TileSet_5n5ix")
+
+[node name="Sun" type="Sprite2D" parent="Stage/SmallPath" unique_id=1432510519]
 position = Vector2(976, 40)
 scale = Vector2(7, 7)
 texture = ExtResource("2_r7lnk")
 
-[node name="Character" type="Node2D" parent="." unique_id=1857713976]
+[node name="Character" type="Node2D" parent="Stage/SmallPath" unique_id=1857713976]
 
-[node name="Catcher" parent="Character" unique_id=1712971132 instance=ExtResource("2_mwpjy")]
+[node name="Catcher" parent="Stage/SmallPath/Character" unique_id=1712971132 instance=ExtResource("2_mwpjy")]
 position = Vector2(640, 320)
 scale = Vector2(8, 8)
 
-[node name="LeftLimit" type="Marker2D" parent="Character" unique_id=1544754583]
+[node name="LeftLimit" type="Marker2D" parent="Stage/SmallPath/Character" unique_id=1544754583]
 position = Vector2(465, 325)
 
-[node name="RightLimit" type="Marker2D" parent="Character" unique_id=1731210315]
+[node name="RightLimit" type="Marker2D" parent="Stage/SmallPath/Character" unique_id=1731210315]
 position = Vector2(815, 325)
 
-[node name="RightEdge" type="Marker2D" parent="Character" unique_id=1794619826]
+[node name="RightEdge" type="Marker2D" parent="Stage/SmallPath/Character" unique_id=1794619826]
 position = Vector2(1205, 325)
 
-[node name="LeftEdge" type="Marker2D" parent="Character" unique_id=121982499]
+[node name="LeftEdge" type="Marker2D" parent="Stage/SmallPath/Character" unique_id=121982499]
 position = Vector2(75, 325)
 
-[node name="Path" parent="." unique_id=814717225 instance=ExtResource("1_4ubfd")]
+[node name="Path" parent="Stage/SmallPath" unique_id=814717225 instance=ExtResource("1_4ubfd")]
 position = Vector2(189, 465)
 scale = Vector2(8, 8)
 
-[node name="CatchTimer" type="Timer" parent="." unique_id=1067201265]
+[node name="CatchTimer" type="Timer" parent="Stage/SmallPath" unique_id=1067201265]
 wait_time = 0.5
 
+[node name="Camera2D" type="Camera2D" parent="Stage/SmallPath" unique_id=167008167]
+position = Vector2(640, 360)
+
+[node name="BigPath" type="Node2D" parent="Stage" unique_id=1719678489]
+script = ExtResource("8_uymwg")
+
+[node name="Path" parent="Stage/BigPath" unique_id=385665329 node_paths=PackedStringArray("player_node") instance=ExtResource("8_lneo4")]
+position = Vector2(0, 1200)
+scale = Vector2(8, 8)
+player_node = NodePath("../Character/Mantis")
+
+[node name="Character" type="Node2D" parent="Stage/BigPath" unique_id=828789334]
+position = Vector2(-64, 1200)
+scale = Vector2(8, 8)
+
+[node name="Mantis" parent="Stage/BigPath/Character" unique_id=924527224 instance=ExtResource("8_mk6be")]
+
+[node name="Camera2D" type="Camera2D" parent="Stage/BigPath/Character/Mantis" unique_id=1376539406]
+limit_left = -3072
+limit_top = 816
+limit_right = 3584
+limit_bottom = 1580
+drag_horizontal_enabled = true
+drag_left_margin = 0.3
+drag_top_margin = 0.3
+
+[node name="LeftLimit" type="Marker2D" parent="Stage/BigPath/Character" unique_id=1182523851]
+position = Vector2(-376, 0)
+
+[node name="RightLimit" type="Marker2D" parent="Stage/BigPath/Character" unique_id=1691027410]
+position = Vector2(456, 0)
+
+[node name="TopLimit" type="Marker2D" parent="Stage/BigPath/Character" unique_id=400794397]
+position = Vector2(8, -48)
+
+[node name="BottomLimit" type="Marker2D" parent="Stage/BigPath/Character" unique_id=359812307]
+position = Vector2(7.375, 48)
+
+[node name="TimeLeftTimer" type="Timer" parent="Stage" unique_id=1838476273]
+
+[node name="StageSwitchTimer" type="Timer" parent="Stage" unique_id=180767083]
+wait_time = 0.1
+
 [node name="HUD" type="CanvasLayer" parent="." unique_id=2010774310]
+process_mode = 3
 script = ExtResource("4_d3qrh")
 
 [node name="ScoreTagLabel" type="Label" parent="HUD" unique_id=443330507]
@@ -70,6 +196,27 @@ offset_bottom = 74.0
 theme_override_fonts/font = ExtResource("4_gsj67")
 theme_override_font_sizes/font_size = 64
 text = "100"
+
+[node name="SwitchBar" type="ProgressBar" parent="HUD" unique_id=469556806]
+offset_left = 38.0
+offset_top = 213.0
+offset_right = 67.0
+offset_bottom = 667.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_ktjup")
+step = 1.0
+fill_mode = 3
+show_percentage = false
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="HUD" unique_id=1720916524]
+position = Vector2(54.000008, 438.00003)
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_g435t")
+
+[node name="IconSprite" type="AnimatedSprite2D" parent="HUD" unique_id=1606198912]
+position = Vector2(56.000004, 150)
+scale = Vector2(6, 6)
+sprite_frames = SubResource("SpriteFrames_ln0f3")
+animation = &"net"
 
 [node name="StartScreen" type="Control" parent="HUD" unique_id=209084992]
 layout_mode = 3
@@ -207,18 +354,21 @@ text = "Press 'Esc' to quit to main menu"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TimeLeftTimer" type="Timer" parent="." unique_id=1838476273]
-
-[connection signal="game_over" from="." to="Character/Catcher" method="_game_end"]
-[connection signal="game_over" from="." to="Path" method="_game_end"]
-[connection signal="pause_game" from="." to="Character/Catcher" method="_game_pause"]
-[connection signal="pause_game" from="." to="Path" method="_game_pause"]
-[connection signal="timeout" from="CatchTimer" to="." method="_on_catch_timer_timeout"]
-[connection signal="resume_game" from="HUD" to="." method="_resume_game"]
-[connection signal="resume_game" from="HUD" to="Character/Catcher" method="_game_pause"]
-[connection signal="start_game" from="HUD" to="." method="_game_start"]
-[connection signal="start_game" from="HUD" to="Character/Catcher" method="_game_start"]
-[connection signal="start_game" from="HUD" to="Path" method="_game_start"]
+[connection signal="game_over" from="Stage" to="Stage/SmallPath/Character/Catcher" method="_game_end"]
+[connection signal="game_over" from="Stage" to="Stage/SmallPath/Path" method="_game_end"]
+[connection signal="game_over" from="Stage" to="HUD" method="showGameOverScreen"]
+[connection signal="switch" from="Stage" to="Stage/SmallPath/Character/Catcher" method="_character_pause"]
+[connection signal="switch" from="Stage" to="Stage/SmallPath/Path" method="_on_switch"]
+[connection signal="switchMode" from="Stage" to="HUD" method="_on_stage_switch_mode"]
+[connection signal="updateBar" from="Stage" to="HUD" method="setSwitchBarPercentage"]
+[connection signal="updateHud" from="Stage" to="HUD" method="updateHud"]
+[connection signal="prayCatched" from="Stage/SmallPath" to="Stage" method="_on_small_path_pray_catched"]
+[connection signal="freshPray" from="Stage/SmallPath/Character/Catcher" to="Stage" method="_on_catcher_fresh_pray"]
+[connection signal="timeout" from="Stage/SmallPath/CatchTimer" to="Stage/SmallPath" method="_on_catch_timer_timeout"]
+[connection signal="timeout" from="Stage/TimeLeftTimer" to="Stage" method="_on_time_left_timer_timeout"]
+[connection signal="timeout" from="Stage/StageSwitchTimer" to="Stage" method="_on_stage_switch_timer_timeout"]
+[connection signal="restart_game" from="HUD" to="Stage" method="_restart_game"]
+[connection signal="restart_game" from="HUD" to="Stage/SmallPath/Character/Catcher" method="_game_start"]
+[connection signal="restart_game" from="HUD" to="Stage/SmallPath/Path" method="_game_restart"]
 [connection signal="pressed" from="HUD/GameOverScreen/QuitButton" to="HUD" method="_on_quit_button_pressed"]
 [connection signal="pressed" from="HUD/GameOverScreen/RetryButton" to="HUD" method="_on_retry_button_pressed"]
-[connection signal="timeout" from="TimeLeftTimer" to="." method="_on_time_left_timer_timeout"]

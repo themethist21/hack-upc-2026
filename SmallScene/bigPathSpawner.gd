@@ -1,18 +1,17 @@
 extends Node2D
 
 @export var bug_scene: PackedScene
-var timeUnilNextBug
+@export var player_node: Node2D
 var rng = RandomNumberGenerator.new()
-var bugTimer = 0
-@export var pathXLimits:Vector2
 
+var timeUnilNextBug
+var bugTimer = 0
 
 func _game_restart() -> void:
 	timeUnilNextBug = rng.randi_range(0,2)
 	bugTimer = 0;
 	$BugTimer.start()
 	
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	timeUnilNextBug = rng.randi_range(0,2)
@@ -23,30 +22,20 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
-
-
+	
 func _on_bug_timer_timeout() -> void:
 	bugTimer += 0.1
 	if (bugTimer >= timeUnilNextBug):
 		var bug = bug_scene.instantiate()
-		bug.position = Vector2((rng.randf_range(get_viewport_rect().position.x, get_viewport_rect().position.x + get_viewport_rect().size.x))/8 - global_position.x/8,rng.randi_range(0,20))
-		print(bug.position)
-		add_child(bug)
+		var sidePos =  -get_viewport_rect().size.x/2 - 20 if rng.randi_range(0,1) == 0 else get_viewport_rect().size.x/2 + 20
+		bug.position = Vector2(player_node.position.x + sidePos/7,rng.randf_range(-48,48))
+		bug.setDir(-sidePos)
+		$Bugs.add_child(bug)
 		
-		timeUnilNextBug = rng.randf_range(2,4)
+		timeUnilNextBug = rng.randf_range(1,3)
 		bugTimer = 0
 		
-func _on_switch(action : bool):
-	if (action): $BugTimer.stop()
-	else: $BugTimer.start()
-	
-func spawnDefeatedBugs(bugs: Array):
+func removeBugs():
+	var bugs = $Bugs.get_children()
 	for bug in bugs:
-		print(bug)
-		var newBug = bug_scene.instantiate()
-		newBug.position = bug - Vector2(global_position.x/8, 0)
-		add_child(newBug)
-		newBug.spawnAsDefeated()
-		
-		
-	
+		bug.queue_free()

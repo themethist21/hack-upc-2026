@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bft2uv0hveds7"
-path="res://.godot/imported/Tiles.png-9e1ad3fc1b48c159fa79dd265549bd0a.ctex"
+uid="uid://ctuib6ogqhr1j"
+path="res://.godot/imported/ProgressBar.png-de6ba26c74a2f5de38af6b69b4838f30.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Tiles.png"
-dest_files=["res://.godot/imported/Tiles.png-9e1ad3fc1b48c159fa79dd265549bd0a.ctex"]
+source_file="res://Assets/ProgressBar.png"
+dest_files=["res://.godot/imported/ProgressBar.png-de6ba26c74a2f5de38af6b69b4838f30.ctex"]
 
 [params]
 

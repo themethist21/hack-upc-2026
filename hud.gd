@@ -1,46 +1,63 @@
 extends CanvasLayer
 
-signal start_game
-signal resume_game(action: bool)
+signal restart_game()
 
-var gameStarted = false
+var gamePaused = true
+var inGame = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	get_tree().paused = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("start"):
+	if Input.is_action_just_pressed("pause"):
 		$StartScreen.hide()
-		if (!gameStarted):
-			start_game.emit()
-			gameStarted = true
+		if (!gamePaused && inGame):
+			$PauseScreen.show()
+			gamePaused = true
+			get_tree().paused = true
 		else:
-			resume_game.emit(false)
+			get_tree().change_scene_to_file("res://MainMenu.tscn")
+	
+	if Input.is_action_just_pressed("start"):
+		if (gamePaused):
+			$StartScreen.hide()
 			$PauseScreen.hide()
+			gamePaused = false
+			get_tree().paused = false
+			inGame = true
+		
 
-func updateScore(score: int):
+func updateHud(timeLeft: int, score: int):
 	$ScoreLabel.text = str(score)
-
-func updateTime(time: int):
-	$TimeLabel.text = str(time)
+	$TimeLabel.text = str(timeLeft)
 
 func showGameOverScreen(score: int):
 	$GameOverScreen.show()
 	$GameOverScreen/GOScoreLabel.text = str(score)
-	gameStarted = false
- 	
-func showPauseScreen():
-	$PauseScreen.show()
+	gamePaused = true
+	get_tree().paused = true
+	inGame = false
 
 
 func _on_retry_button_pressed() -> void:
-	start_game.emit()
+	restart_game.emit()
 	$GameOverScreen.hide()
-	gameStarted = true
-	updateScore(0)
+	gamePaused = false
+	get_tree().paused = false
+	inGame = true
+	$IconSprite.animation = "net"
 
 
 func _on_quit_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://MainMenu.tscn")
+
+func setSwitchBarPercentage(val: float) -> void:
+	$SwitchBar.value = val
+	
+
+
+func _on_stage_switch_mode(mode: bool) -> void:
+	if mode: $IconSprite.animation = "bug"
+	else: $IconSprite.animation = "net"

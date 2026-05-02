@@ -2,8 +2,12 @@
 
 [ext_resource type="Script" uid="uid://lcb2u7kfirc3" path="res://main_menu.gd" id="1_eiy7p"]
 [ext_resource type="FontFile" uid="uid://dxnhxrgq0iwxa" path="res://Assets/Fibberish v1.0/fibberish.ttf" id="2_h7a2f"]
+[ext_resource type="Texture2D" uid="uid://bwyiwp4lkw4j8" path="res://Assets/MainMenu.png" id="2_qoqlk"]
+
+[sub_resource type="Theme" id="Theme_iwfq2"]
 
 [node name="Main" type="Control" unique_id=177880764]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,12 +16,21 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_eiy7p")
 
+[node name="TextureRect" type="TextureRect" parent="." unique_id=59801269]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = ExtResource("2_qoqlk")
+
 [node name="PlayButton" type="Button" parent="." unique_id=602277825]
 layout_mode = 0
 offset_left = 668.0
 offset_top = 308.0
 offset_right = 1016.0
 offset_bottom = 372.0
+theme = SubResource("Theme_iwfq2")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 9
 theme_override_fonts/font = ExtResource("2_h7a2f")
 theme_override_font_sizes/font_size = 64
 text = "Play"
@@ -28,6 +41,8 @@ offset_left = 668.0
 offset_top = 393.0
 offset_right = 1016.0
 offset_bottom = 457.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 9
 theme_override_fonts/font = ExtResource("2_h7a2f")
 theme_override_font_sizes/font_size = 64
 text = "Exit"
@@ -38,6 +53,8 @@ offset_left = 667.0
 offset_top = 477.0
 offset_right = 1015.0
 offset_bottom = 541.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 9
 theme_override_fonts/font = ExtResource("2_h7a2f")
 theme_override_font_sizes/font_size = 64
 text = "Credits
@@ -49,6 +66,8 @@ offset_left = 421.0
 offset_top = 126.0
 offset_right = 1014.0
 offset_bottom = 231.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 11
 theme_override_fonts/font = ExtResource("2_h7a2f")
 theme_override_font_sizes/font_size = 120
 text = "Bug Catcher"
@@ -59,6 +78,8 @@ offset_left = 923.0
 offset_top = 222.0
 offset_right = 1103.0
 offset_bottom = 250.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
 theme_override_fonts/font = ExtResource("2_h7a2f")
 theme_override_font_sizes/font_size = 32
 text = "v0.0.1"

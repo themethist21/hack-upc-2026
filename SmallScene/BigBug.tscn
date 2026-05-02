@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://dolw4471ww815"]
+
+[ext_resource type="Script" uid="uid://bbk331a6fdnuq" path="res://SmallScene/big_bug.gd" id="1_0f2s3"]
+[ext_resource type="Texture2D" uid="uid://b01wbw1vbxjlq" path="res://Assets/Sun.png" id="1_tasp0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0f2s3"]
+size = Vector2(21, 22)
+
+[node name="AnimatableBody2D" type="AnimatableBody2D" unique_id=587635020]
+sync_to_physics = false
+script = ExtResource("1_0f2s3")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1059368010]
+self_modulate = Color(1, 0.3, 0.3, 1)
+position = Vector2(1.1920929e-07, 2.3841858e-07)
+scale = Vector2(0.671875, 0.734375)
+texture = ExtResource("1_tasp0")
+
+[node name="DeathTimer" type="Timer" parent="." unique_id=632852668]
+wait_time = 20.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=93667488]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_0f2s3")
+
+[connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]

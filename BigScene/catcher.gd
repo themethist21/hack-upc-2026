@@ -2,16 +2,11 @@ extends Node2D
 
 var isCatching : bool = false;
 var catched = []
-var isRunning = false
+signal freshPray(many: int)
 
 func _game_start() -> void:
-	isRunning = true
-	
-func _game_end() -> void:
-	isRunning = false
+	$Hitmarker/CatchSprite.hide()
 
-func _game_pause(action: bool) -> void:
-	isRunning = !action
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -20,14 +15,13 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if Input.is_action_pressed("move_up") && isRunning:
+	if Input.is_action_pressed("move_up") && !isCatching:
 		processHitmarkerMovement(-1)
 		
-	if Input.is_action_pressed("move_down") && isRunning:
+	if Input.is_action_pressed("move_down") && !isCatching:
 		processHitmarkerMovement(1)
  
 
-		
 func processHitmarkerMovement(dir: int):
 	var velocity = 0.5 * dir
 	
@@ -56,8 +50,11 @@ func catchDone() -> int:
 	$CatchOutTimer.start()
 	
 	var score = catched.size()
+	var fresh = 0
 	for bug in catched:
-		bug.onCatched()
+		if (bug.onCatched()): fresh += 1
+	
+	freshPray.emit(fresh)
 	return score
 	
 

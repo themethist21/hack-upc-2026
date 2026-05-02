@@ -6,6 +6,7 @@ var timeTillDeath
 var speed = 0
 
 var dying = false
+var defeated = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -54,7 +55,7 @@ func wait(seconds: float) -> void:
 func _on_hide_timer_timeout() -> void:
 	queue_free()
 
-func onCatched():
+func onCatched() -> bool:
 	speed = 0
 	$AnimatedSprite2D.animation = "points"
 	$AnimatedSprite2D.play()
@@ -63,3 +64,11 @@ func onCatched():
 	$HideTimer.start()
 	$CollisionShape2D.disabled = true
 	
+	return !defeated
+	
+func spawnAsDefeated():
+	$SpawnTimer.stop()
+	$AnimatedSprite2D.animation = "defeated"
+	$AnimatedSprite2D.play()
+	$CollisionShape2D.disabled = false
+	defeated = true
