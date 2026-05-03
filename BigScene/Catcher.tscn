@@ -49,7 +49,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_q3nac"]
-radius = 8.12655
+radius = 6.0
 
 [node name="Catcher" type="Node2D" unique_id=1712971132]
 script = ExtResource("1_w7ojh")
@@ -64,7 +64,7 @@ position = Vector2(0, 39)
 sprite_frames = SubResource("SpriteFrames_ecm1t")
 
 [node name="CatchOutTimer" type="Timer" parent="." unique_id=822761718]
-wait_time = 0.5
+wait_time = 0.2
 
 [node name="Hitmarker" type="Node2D" parent="." unique_id=1214153016]
 z_index = 2

@@ -20,7 +20,7 @@ func _process(delta: float) -> void:
 		if Input.is_action_pressed("move_left"):
 			processPathMovement(1)
 	
-	if Input.is_action_just_pressed("catch"):
+	if Input.is_action_just_pressed("catch") && !$Character/Catcher.is_catching():
 		$Character/Catcher.catchReady()
 		$CatchTimer.start();
 

@@ -4,6 +4,7 @@ signal restart_game()
 
 var gamePaused = true
 var inGame = false
+var showedBonus = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -61,3 +62,19 @@ func setSwitchBarPercentage(val: float) -> void:
 func _on_stage_switch_mode(mode: bool) -> void:
 	if mode: $IconSprite.animation = "bug"
 	else: $IconSprite.animation = "net"
+
+
+func _on_stage_show_time_bonus() -> void:
+	pass
+
+
+func _on_stage_update_bonus(bonus: int) -> void:
+	showedBonus = bonus
+	if(showedBonus > 0): 
+		$BonusLabel.show()
+		$BonusLabel.text = "Bonus: x%d" % showedBonus
+	else:
+		$BonusLabel.hide()
+	
+	
+	

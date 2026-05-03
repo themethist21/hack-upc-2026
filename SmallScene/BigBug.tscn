@@ -1,26 +1,90 @@
 [gd_scene format=3 uid="uid://dolw4471ww815"]
 
 [ext_resource type="Script" uid="uid://bbk331a6fdnuq" path="res://SmallScene/big_bug.gd" id="1_0f2s3"]
-[ext_resource type="Texture2D" uid="uid://b01wbw1vbxjlq" path="res://Assets/Sun.png" id="1_tasp0"]
+[ext_resource type="Texture2D" uid="uid://cchab816itt8e" path="res://Assets/BigBug.png" id="2_0f2s3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f1og7"]
+atlas = ExtResource("2_0f2s3")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ke4vt"]
+atlas = ExtResource("2_0f2s3")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_odn7o"]
+atlas = ExtResource("2_0f2s3")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8jmco"]
+atlas = ExtResource("2_0f2s3")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8mr4n"]
+atlas = ExtResource("2_0f2s3")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iyonx"]
+atlas = ExtResource("2_0f2s3")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kt7ta"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f1og7")
+}],
+"loop": true,
+"name": &"damaged",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ke4vt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_odn7o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8jmco")
+}],
+"loop": true,
+"name": &"defeated",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8mr4n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iyonx")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0f2s3"]
-size = Vector2(21, 22)
+size = Vector2(22, 15)
 
 [node name="AnimatableBody2D" type="AnimatableBody2D" unique_id=587635020]
 sync_to_physics = false
 script = ExtResource("1_0f2s3")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1059368010]
-self_modulate = Color(1, 0.3, 0.3, 1)
-position = Vector2(1.1920929e-07, 2.3841858e-07)
-scale = Vector2(0.671875, 0.734375)
-texture = ExtResource("1_tasp0")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=597595083]
+position = Vector2(-2, 0)
+sprite_frames = SubResource("SpriteFrames_kt7ta")
+animation = &"walk"
+frame_progress = 0.006096811
 
 [node name="DeathTimer" type="Timer" parent="." unique_id=632852668]
 wait_time = 20.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=93667488]
-position = Vector2(0.5, 0)
+position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_0f2s3")
 
+[node name="AttackedTimer" type="Timer" parent="." unique_id=1804690980]
+wait_time = 0.2
+
 [connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
+[connection signal="timeout" from="AttackedTimer" to="." method="_on_attacked_timer_timeout"]

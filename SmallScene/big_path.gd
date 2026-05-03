@@ -4,6 +4,7 @@ var playerVel := Vector2(0,0)
 var playerInput := Vector2(0,0)
 var facingRight = true
 var defeatedBugs = []
+signal hitTimeBonus(bonusTime: int)
 
 func reset():	
 	$Character/Mantis.position.x = 0
@@ -67,8 +68,10 @@ func processAttack():
 		var postition = node.position
 		var transformedPosition: Vector2
 		transformedPosition.x = remap(node.position.x, $Character/LeftLimit.position.x, $Character/RightLimit.position.x, 0, 1280/8)
-		transformedPosition.y = remap(node.position.y, -48, 48, 0, 20)
+		transformedPosition.y = remap(node.position.y, -52, 52, 0, 20)
 		defeatedBugs.append(transformedPosition)
+	
+	hitTimeBonus.emit(defeated.size())
 	
 func getDefeatedBugs()->Array:
 	return defeatedBugs

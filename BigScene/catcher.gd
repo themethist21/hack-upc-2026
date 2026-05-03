@@ -3,9 +3,15 @@ extends Node2D
 var isCatching : bool = false;
 var catched = []
 signal freshPray(many: int)
+signal addTime(time: int)
+signal addBonus()
 
 func _game_start() -> void:
 	$Hitmarker/CatchSprite.hide()
+	position.x = 640
+	$AnimatedSprite2D.set_frame_and_progress(0, 0)
+	$CatchOutTimer.stop();
+	isCatching = false
 
 
 # Called when the node enters the scene tree for the first time.
@@ -49,15 +55,17 @@ func catchDone() -> int:
 	$Hitmarker/Pointer.hide()
 	$CatchOutTimer.start()
 	
-	var score = catched.size()
+	var score = 0
 	var fresh = 0
+	var bonus = false
 	for bug in catched:
+		if (bug.is_bonus()): addBonus.emit()
+		if (bug.is_time()): addTime.emit(10)
+		score += bug.getPoints()
 		if (bug.onCatched()): fresh += 1
 	
 	freshPray.emit(fresh)
 	return score
-	
-
 
 func _on_catch_out_timer_timeout() -> void:
 	isCatching = false;
